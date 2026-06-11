@@ -7,51 +7,100 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Custom styles for extreme glassmorphism and glow effects */
+        /* Hide Default Cursor on desktop device viewports to enable custom canvas engine */
+        @media (min-width: 768px) {
+            body, button, a, [role="button"], select, input {
+                cursor: none !important;
+            }
+        }
+
+        /* Custom Elastic Hardware-Accelerated Cursor Nodes */
+        #custom-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        #custom-ring {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #ec4899;
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Responsive UI Cursor Morphing Under Hover Configurations */
+        .cursor-hover-active #custom-ring {
+            width: 55px;
+            height: 55px;
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.6);
+        }
+        .cursor-hover-active #custom-dot {
+            background: #ec4899;
+            width: 4px;
+            height: 4px;
+        }
+
+        /* Glassmorphism Standard Backdrops */
         .glass-panel {
             background: rgba(17, 24, 39, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
+        
+        /* Interactive Buttons Micro-Interactions */
         .btn-green {
             background: #22c55e;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-green:hover {
-            box-shadow: 0 0 25px rgba(34, 197, 94, 0.8);
-            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.8);
+            transform: scale(1.03);
         }
         .btn-pink {
             background: #ec4899;
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-pink:hover {
-            box-shadow: 0 0 25px rgba(236, 72, 153, 0.8);
-            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+            transform: scale(1.03);
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111827;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #374151;
-            border-radius: 4px;
-        }
+
+        /* Performance Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen font-sans antialiased relative overflow-x-hidden">
 
-    <!-- Decorative Background Glows -->
+    <!-- Active Custom Cursor Nodes -->
+    <div id="custom-dot"></div>
+    <div id="custom-ring"></div>
+
+    <!-- Background Decorative Glow Matrix -->
     <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <!-- Navigation -->
+    <!-- Navigation Bar -->
     <nav class="w-full glass-panel sticky top-0 z-50 border-b border-white/10 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-2">
             <span class="text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-pink-500">
@@ -61,76 +110,65 @@
         <span class="text-xs font-mono tracking-widest text-pink-400 border border-pink-500/30 px-2 py-1 rounded bg-pink-950/30">DARK MODE ACTIVE</span>
     </nav>
 
-    <!-- Main Container -->
+    <!-- Main Workspace -->
     <main class="max-w-6xl mx-auto px-4 py-12 relative z-10">
-        
-        <!-- Header Section -->
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
                 Discover Your <span class="text-green-400">Perfect Future</span>
             </h1>
             <p class="text-gray-400 max-w-2xl mx-auto text-base md:text-lg">
-                Select your stream, click your core interests and strengths, and let our glass-powered engine guide your next big move.
+                Select your stream, click your core interests and strengths, and explore over 70 custom matched career blueprints instantly.
             </p>
         </header>
 
-        <!-- Quiz Interface Card -->
+        <!-- Configuration Panel Dashboard -->
         <div class="glass-panel rounded-3xl p-6 md:p-10 shadow-2xl mb-12">
-            
-            <!-- Step 1: Stream Selection -->
+            <!-- Section 1: Academic Stream Selection -->
             <section class="mb-10">
                 <h2 class="text-xl font-bold mb-4 text-green-400 flex items-center">
                     <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
                     1. Select Your Academic Stream
                 </h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="stream-container">
-                    <!-- Dynamic Stream Buttons generated via JS -->
-                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="stream-container"></div>
             </section>
 
-            <!-- Step 2: Interests Selection -->
+            <!-- Section 2: Interest Parameter Badges -->
             <section class="mb-10">
                 <h2 class="text-xl font-bold mb-2 text-pink-400 flex items-center">
                     <span class="w-2 h-2 rounded-full bg-pink-400 mr-2 animate-pulse"></span>
                     2. Select Your Interests <span class="text-xs text-gray-500 ml-2">(Select multiple)</span>
                 </h2>
-                <div class="flex flex-wrap gap-2.5 max-h-48 overflow-y-auto p-2 border border-white/5 rounded-xl bg-gray-900/40" id="interests-container">
-                    <!-- Dynamic Interests tags -->
-                </div>
+                <div class="flex flex-wrap gap-2.5 max-h-56 overflow-y-auto p-3 border border-white/5 rounded-xl bg-gray-900/40" id="interests-container"></div>
             </section>
 
-            <!-- Step 3: Strengths Selection -->
+            <!-- Section 3: Strength Parameter Badges -->
             <section class="mb-10">
                 <h2 class="text-xl font-bold mb-2 text-green-400 flex items-center">
                     <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
                     3. Select Your Strengths <span class="text-xs text-gray-500 ml-2">(Select multiple)</span>
                 </h2>
-                <div class="flex flex-wrap gap-2.5 max-h-48 overflow-y-auto p-2 border border-white/5 rounded-xl bg-gray-900/40" id="strengths-container">
-                    <!-- Dynamic Strengths tags -->
-                </div>
+                <div class="flex flex-wrap gap-2.5 max-h-56 overflow-y-auto p-3 border border-white/5 rounded-xl bg-gray-900/40" id="strengths-container"></div>
             </section>
 
-            <!-- Action Button -->
+            <!-- Execution Action Callout -->
             <div class="text-center">
-                <button onclick="generateCareers()" class="btn-pink text-white font-bold text-lg px-12 py-4 rounded-xl cursor-pointer">
+                <button onclick="generateCareers()" class="btn-pink text-white font-bold text-lg px-12 py-4 rounded-xl interactive-element shadow-lg">
                     Find My Career Compass
                 </button>
             </div>
         </div>
 
-        <!-- Results Section -->
+        <!-- Career Pathway Dynamic Output Architecture -->
         <section id="results-section" class="hidden scroll-mt-24">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-pink-500">
                     RECOMMENDED PATHWAYS
                 </h2>
-                <button onclick="resetApp()" class="text-xs border border-white/20 text-gray-400 hover:text-white px-3 py-1.5 rounded-lg transition hover:bg-white/5">
+                <button onclick="resetApp()" class="text-xs border border-white/20 text-gray-400 hover:text-white px-3 py-1.5 rounded-lg transition hover:bg-white/5 interactive-element">
                     Clear Selections
                 </button>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="careers-output">
-                <!-- Matches injected here -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="careers-output"></div>
         </section>
     </main>
 
@@ -138,151 +176,154 @@
         &copy; 2026 CareerCompass. Built with high-fidelity glassmorphism.
     </footer>
 
-    <!-- Application Logic Script -->
     <script>
+        // Core Configurable Datasets
         const streams = ["Science (PCM)", "Science (PCB)", "Commerce", "Arts & Humanities"];
+        
+        const interests = ["Coding & Software", "AI & Automation", "Space & Astronomy", "Gadgets & Robotics", "Medical Tech", "Wildlife & Nature", "Genetics & Biology", "Chemical Experiments", "Stock Markets", "Cryptocurrency", "Business Management", "Startups & Entrepreneurship", "Creative Writing", "Digital Marketing", "Video Game Design", "Psychology & Behavior", "History & Culture", "Photography & Video", "Public Speaking", "Music & Sound Design", "Fashion & Styling", "Architecture & Decor", "Law & Justice", "Politics & Governance", "Teaching & Training", "Social Work", "Food & Culinary Arts", "Sports & Fitness", "Data & Analytics", "Languages & Translation", "Environmental Protection", "Graphic Designing"];
+        
+        const strengths = ["Analytical Thinking", "Logical Reasoning", "Problem Solving", "Mathematical Aptitude", "Creative Thinking", "Visualizing Concepts", "Storytelling", "Empathy & Compassion", "Negotiation", "Leadership", "Team Management", "Attention to Detail", "Organization & Planning", "Critical Analysis", "Research Skills", "Adaptability", "Active Listening", "Financial Savvy", "Technical Troubleshooting", "Statistical Analysis", "Debating", "Networking", "Strategic Planning", "Observation", "Patience", "Resilience", "Time Management", "Persuasion", "Artistic Flare", "Emotional Intelligence", "Coding Speed"];
 
-        const interests = [
-            "Coding & Software", "AI & Automation", "Space & Astronomy", "Gadgets & Robotics",
-            "Medical Tech", "Wildlife & Nature", "Genetics & Biology", "Chemical Experiments",
-            "Stock Markets", "Cryptocurrency", "Business Management", "Startups & Entrepreneurship",
-            "Creative Writing", "Digital Marketing", "Video Game Design", "Psychology & Behavior",
-            "History & Culture", "Photography & Video", "Public Speaking", "Music & Sound Design",
-            "Fashion & Styling", "Architecture & Decor", "Law & Justice", "Politics & Governance",
-            "Teaching & Training", "Social Work", "Food & Culinary Arts", "Sports & Fitness",
-            "Data & Analytics", "Languages & Translation", "Environmental Protection", "Graphic Designing"
-        ];
-
-        const strengths = [
-            "Analytical Thinking", "Logical Reasoning", "Problem Solving", "Mathematical Aptitude",
-            "Creative Thinking", "Visualizing Concepts", "Storytelling", "Empathy & Compassion",
-            "Public Speaking", "Negotiation", "Leadership", "Team Management",
-            "Attention to Detail", "Organization & Planning", "Critical Analysis", "Research Skills",
-            "Adaptability", "Active Listening", "Financial Savvy", "Technical Troubleshooting",
-            "Statistical Analysis", "Debating", "Networking", "Strategic Planning",
-            "Observation", "Patience", "Resilience", "Time Management",
-            "Persuasion", "Artistic Flare", "Emotional Intelligence", "Coding Speed"
-        ];
-
+        // The Massive Comprehensive 70+ Career Database
         const careersDatabase = {
             "Science (PCM)": [
-                { title: "Software Engineer", tags: ["Coding & Software", "Analytical Thinking", "Problem Solving"], desc: "Build applications and enterprise systems using code." },
-                { title: "Data Scientist", tags: ["Data & Analytics", "Statistical Analysis", "Logical Reasoning"], desc: "Extract meaning from deep structural Big Data ecosystems." },
-                { title: "Aerospace Engineer", tags: ["Space & Astronomy", "Mathematical Aptitude", "Critical Analysis"], desc: "Design spacecraft, missiles, and high-altitude aircraft." },
-                { title: "AI/ML Research Specialist", tags: ["AI & Automation", "Coding Speed", "Analytical Thinking"], desc: "Train complex neural networks and automated paradigms." },
-                { title: "Robotics Architect", tags: ["Gadgets & Robotics", "Technical Troubleshooting", "Visualizing Concepts"], desc: "Build automated machines for industrial and medical use." },
-                { title: "Cybersecurity Analyst", tags: ["Coding & Software", "Attention to Detail", "Problem Solving"], desc: "Protect critical digital architecture against systemic breaches." },
-                { title: "Quantum Computing Scientist", tags: ["Analytical Thinking", "Logical Reasoning", "Research Skills"], desc: "Develop cutting-edge computers using quantum physics rules." },
-                { title: "Cloud Systems Engineer", tags: ["AI & Automation", "Technical Troubleshooting", "Organization & Planning"], desc: "Manage remote networks and dynamic server configurations." },
-                { title: "Full Stack Developer", tags: ["Coding & Software", "Coding Speed", "Creative Thinking"], desc: "Create user interfaces and server architectures alike." },
-                { title: "Game Programmer", tags: ["Video Game Design", "Coding Speed", "Visualizing Concepts"], desc: "Bring interactive entertainment mechanics to life via code." },
-                { title: "Blockchain Developer", tags: ["Cryptocurrency", "Logical Reasoning", "Analytical Thinking"], desc: "Architect decentralized ledger technologies." },
-                { title: "Civil Infrastructure Engineer", tags: ["Architecture & Decor", "Mathematical Aptitude", "Team Management"], desc: "Oversee major civic infrastructure, bridges, and smart hubs." },
-                { title: "Automotive Designer", tags: ["Gadgets & Robotics", "Artistic Flare", "Strategic Planning"], desc: "Formulate next-generation electric vehicle designs." },
-                { title: "Chemical Refinery Specialist", tags: ["Chemical Experiments", "Attention to Detail", "Patience"], desc: "Supervise production cycles of synthetic items and fuels." },
-                { title: "Environmental Engineer", tags: ["Environmental Protection", "Problem Solving", "Research Skills"], desc: "Create technologies to eliminate pollution and restore ecosystems." },
-                { title: "Nuclear Physicist", tags: ["Analytical Thinking", "Research Skills", "Logical Reasoning"], desc: "Conduct complex atomic matrix research." },
-                { title: "Sound Automation Engineer", tags: ["Music & Sound Design", "Technical Troubleshooting", "Creative Thinking"], desc: "Program audio frequencies and procedural generation filters." },
-                { title: "Mechatronics Expert", tags: ["Gadgets & Robotics", "Problem Solving", "Analytical Thinking"], desc: "Conjoin electrical engineering with mechanical machinery." },
-                { title: "UX Tech Architect", tags: ["Graphic Designing", "Visualizing Concepts", "Active Listening"], desc: "Structure algorithmic workflows behind layout layouts." },
-                { title: "Biomedical Engineer", tags: ["Medical Tech", "Technical Troubleshooting", "Attention to Detail"], desc: "Design artificial limbs and state-of-the-art organ mapping machinery." },
-                { title: "DevOps Specialist", tags: ["AI & Automation", "Technical Troubleshooting", "Time Management"], desc: "Bridge the gap between software development and IT infrastructure for rapid deployment." },
-                { title: "Renewable Energy Grid Architect", tags: ["Environmental Protection", "Mathematical Aptitude", "Strategic Planning"], desc: "Design high-efficiency solar, wind, and hydro-power collection networks." },
-                { title: "AR/VR Systems Engineer", tags: ["Video Game Design", "Visualizing Concepts", "Coding Speed"], desc: "Develop immersive spatial computing software and hardware frameworks." },
-                { title: "Quantitative Trader", tags: ["Stock Markets", "Statistical Analysis", "Mathematical Aptitude"], desc: "Build mathematical algorithms to execute lightning-fast financial market trades." },
-                // ADDED RAILWAY TO PCM (Engineering & Tech Cadre)
-                { title: "Railway Operations Engineer / Technical Manager", tags: ["Gadgets & Robotics", "Organization & Planning", "Problem Solving"], desc: "Manage signaling networks, high-speed rail engineering, and transit line integrity structures." }
+                { title: "Software Engineer", tags: ["Coding & Software", "Analytical Thinking", "Problem Solving"], desc: "Build applications, tools, and enterprise systems using code." },
+                { title: "Data Scientist", tags: ["Data & Analytics", "Statistical Analysis", "Logical Reasoning"], desc: "Extract meaning from structural Big Data ecosystems using statistical modeling." },
+                { title: "Aerospace Engineer", tags: ["Space & Astronomy", "Mathematical Aptitude", "Critical Analysis"], desc: "Design spacecraft, satellites, missiles, and commercial high-altitude aircraft." },
+                { title: "AI/ML Research Specialist", tags: ["AI & Automation", "Coding Speed", "Analytical Thinking"], desc: "Train complex deep learning models, transformers, and automated systems." },
+                { title: "Robotics Architect", tags: ["Gadgets & Robotics", "Technical Troubleshooting", "Visualizing Concepts"], desc: "Build automated robotic units for heavy manufacturing, distribution, and tactical use." },
+                { title: "Cybersecurity Analyst", tags: ["Coding & Software", "Critical Analysis", "Technical Troubleshooting"], desc: "Defend digital infrastructure against network intrusions and advanced threats." },
+                { title: "Full-Stack Web Architect", tags: ["Coding & Software", "Creative Thinking", "Problem Solving"], desc: "Design modern database logic along with premium responsive user interfaces." },
+                { title: "Game Engine Developer", tags: ["Video Game Design", "Mathematical Aptitude", "Coding Speed"], desc: "Write low-level physics renderers and rendering systems for next-gen interactive media." },
+                { title: "Cloud Infrastructure Specialist", tags: ["AI & Automation", "Technical Troubleshooting", "Organization & Planning"], desc: "Deploy hyper-scalable remote storage grids and continuous deployment structures." },
+                { title: "Quantum Computing Engineer", tags: ["Analytical Thinking", "Logical Reasoning", "Mathematical Aptitude"], desc: "Develop processing methodologies using quantum superposition and subatomic algorithms." },
+                { title: "Blockchain Solutions Engineer", tags: ["Cryptocurrency", "Coding & Software", "Logical Reasoning"], desc: "Architect cryptographically secure smart contracts and distributed ledgers." },
+                { title: "Automotive EV Engineer", tags: ["Gadgets & Robotics", "Analytical Thinking", "Problem Solving"], desc: "Design efficient lithium battery drivetrains and autonomous driving systems." },
+                { title: "IoT Network Integrator", tags: ["Gadgets & Robotics", "Coding & Software", "Technical Troubleshooting"], desc: "Embed microcontrollers and wireless telemetry protocols into smart home frameworks." },
+                { title: "AR/VR Interaction Designer", tags: ["Video Game Design", "Visualizing Concepts", "Creative Thinking"], desc: "Construct spatial mapping workflows and head-mounted tracking simulations." },
+                { title: "Chemical Refinery Superintendent", tags: ["Chemical Experiments", "Leadership", "Attention to Detail"], desc: "Direct large-scale automated petro-chemical and raw material extraction labs." },
+                { title: "Civil Infrastructure Engineer", tags: ["Visualizing Concepts", "Mathematical Aptitude", "Strategic Planning"], desc: "Design durable concrete overpasses, tunnels, and foundational mega-structures." },
+                { title: "Sound System Designer", tags: ["Music & Sound Design", "Technical Troubleshooting", "Analytical Thinking"], desc: "Model sonic environments and acoustic profiles using DSP wave metrics." },
+                { title: "Railway Operations Engineer", tags: ["Gadgets & Robotics", "Organization & Planning", "Problem Solving"], desc: "Manage signaling networks, high-speed rail engineering, and transit line integrity structures." }
             ],
             "Science (PCB)": [
-                // ADDED DOCTOR TO PCB
-                { title: "Medical Doctor (MD / Specialist)", tags: ["Medical Tech", "Analytical Thinking", "Empathy & Compassion"], desc: "Diagnose human physiological issues, administer treatments, and lead clinical interventions." },
-                { title: "Neurosurgeon", tags: ["Medical Tech", "Attention to Detail", "Resilience"], desc: "Operate on the most delicate central nervous pathways." },
-                { title: "Geneticist", tags: ["Genetics & Biology", "Analytical Thinking", "Research Skills"], desc: "Alter and decode chromosomal maps to eliminate ailments." },
-                { title: "Wildlife Veterinarian", tags: ["Wildlife & Nature", "Empathy & Compassion", "Observation"], desc: "Treat and care for exotic or endangered animal structures." },
-                { title: "Pharmacologist", tags: ["Chemical Experiments", "Patience", "Critical Analysis"], desc: "Discover next-generation life-saving drugs." },
-                { title: "Biotech Entrepreneur", tags: ["Startups & Entrepreneurship", "Leadership", "Genetics & Biology"], desc: "Launch enterprises scaling synthetic biological solutions." },
-                { title: "Oncologist", tags: ["Medical Tech", "Active Listening", "Emotional Intelligence"], desc: "Diagnose and treat neoplastic conditions with cutting-edge therapies." },
-                { title: "Marine Biologist", tags: ["Wildlife & Nature", "Research Skills", "Observation"], desc: "Study oceanic fauna populations and oceanic changes." },
-                { title: "Forensic Pathologist", tags: ["Attention to Detail", "Critical Analysis", "Logical Reasoning"], desc: "Examine anatomical clues to uncover criminal actions." },
-                { title: "Immunologist", tags: ["Genetics & Biology", "Analytical Thinking", "Patience"], desc: "Map viral mutations and vaccine efficiency models." },
-                { title: "Clinical Psychologist", tags: ["Psychology & Behavior", "Empathy & Compassion", "Active Listening"], desc: "Counsel and rehabilitate individuals navigating intense mental stressors." },
-                { title: "Dietitian & Metabolic Coach", tags: ["Sports & Fitness", "Organization & Planning", "Persuasion"], desc: "Design optimal biochemical fuels for custom human bodies." },
-                { title: "Epidemiologist", tags: ["Data & Analytics", "Statistical Analysis", "Strategic Planning"], desc: "Track population disease patterns globally." },
-                { title: "Microbiologist", tags: ["Chemical Experiments", "Observation", "Attention to Detail"], desc: "Analyze microscopic cellular cultures and pathogens." },
-                { title: "Radiologist", tags: ["Medical Tech", "Visualizing Concepts", "Critical Analysis"], desc: "Interpret complex cross-sectional imagery and MRI charts." },
-                { title: "Environmental Ecologist", tags: ["Environmental Protection", "Patience", "Research Skills"], desc: "Protect native bio-diverse sanctuaries from environmental decay." },
-                { title: "Physiotherapist", tags: ["Sports & Fitness", "Resilience", "Empathy & Compassion"], desc: "Rebuild muscle and motor abilities through physical therapy." },
-                { title: "Bionic Prosthetics Specialist", tags: ["Medical Tech", "Creative Thinking", "Problem Solving"], desc: "Integrate carbon fibers with somatic nerves." },
-                { title: "Food Technologist", tags: ["Food & Culinary Arts", "Attention to Detail", "Chemical Experiments"], desc: "Develop shelf-stable nutrition configurations." },
-                { title: "Botanical Geneticist", tags: ["Wildlife & Nature", "Genetics & Biology", "Analytical Thinking"], desc: "Engineer resilient, high-yield plant species." },
-                { title: "Aesthetic Dermatologist", tags: ["Fashion & Styling", "Visualizing Concepts", "Communication"], desc: "Enhance dermatological structures using lasers and advanced treatments." },
-                { title: "Bioinformatics Scientist", tags: ["Data & Analytics", "Genetics & Biology", "Logical Reasoning"], desc: "Use computational software tools to map raw DNA and protein sequence batches." },
-                { title: "Neuro-Psychopharmacologist", tags: ["Psychology & Behavior", "Chemical Experiments", "Research Skills"], desc: "Investigate how synthetic biochemical chemical compounds alter human mental states." },
-                { title: "Virology Defense Architect", tags: ["Medical Tech", "Critical Analysis", "Resilience"], desc: "Design mitigation frameworks and early defenses against airborne pandemics." },
-                { title: "Cryopreservation Specialist", tags: ["Genetics & Biology", "Attention to Detail", "Patience"], desc: "Manage ultra-low temperature cell, tissue, and organ biological storage." }
+                { title: "Medical Doctor (MD)", tags: ["Medical Tech", "Analytical Thinking", "Empathy & Compassion"], desc: "Diagnose human physiological issues, administer treatments, and lead clinical interventions." },
+                { title: "Neurosurgeon", tags: ["Medical Tech", "Attention to Detail", "Resilience"], desc: "Operate on the most delicate central nervous pathways and neurological systems." },
+                { title: "Geneticist", tags: ["Genetics & Biology", "Analytical Thinking", "Research Skills"], desc: "Alter, decode, and splice genetic structures to preemptively cure chronic inherited ailments." },
+                { title: "Wildlife Veterinarian", tags: ["Wildlife & Nature", "Empathy & Compassion", "Observation"], desc: "Treat and preserve exotic, wild, or endangered animals in sanctuary ecosystems." },
+                { title: "Pharmacologist", tags: ["Chemical Experiments", "Research Skills", "Attention to Detail"], desc: "Synthesize pharmaceutical components and run trials on cell targeting molecules." },
+                { title: "Biomedical Prosthetist", tags: ["Medical Tech", "Gadgets & Robotics", "Visualizing Concepts"], desc: "Design biological matching synthetic limbs, robotic orthotics, and organ gear." },
+                { title: "Marine Biologist", tags: ["Wildlife & Nature", "Research Skills", "Observation"], desc: "Examine deep sea organisms, oceanic health metrics, and coral system preservation." },
+                { title: "Oncology Researcher", tags: ["Genetics & Biology", "Critical Analysis", "Patience"], desc: "Isolate cancerous cellular growth behaviors to build specific targeted immunotherapies." },
+                { title: "Forensic Pathologist", tags: ["Analytical Thinking", "Attention to Detail", "Research Skills"], desc: "Investigate unpredictable or criminal mortalities via comprehensive tissue autopsies." },
+                { title: "Immunologist", tags: ["Genetics & Biology", "Logical Reasoning", "Problem Solving"], desc: "Map white blood cell response mechanisms against evolving viruses and pandemics." },
+                { title: "Microbiologist", tags: ["Chemical Experiments", "Observation", "Patience"], desc: "Cultivate bacterial cultures and observe microscopic mutations under pure clean-room conditions." },
+                { title: "Botanical Yield Scientist", tags: ["Wildlife & Nature", "Environmental Protection", "Analytical Thinking"], desc: "Engineer high-resilience agricultural strains to counter shifting weather shifts." },
+                { title: "Sports Physiotherapist", tags: ["Sports & Fitness", "Empathy & Compassion", "Active Listening"], desc: "Rehabilitate muscle tears and joint stress vectors in competitive athletic assets." },
+                { title: "Dietitian & Nutritionist", tags: ["Food & Culinary Arts", "Analytical Thinking", "Adaptability"], desc: "Tailor complex metabolic meal models based on deep biometric profile analyses." },
+                { title: "Epidemiologist", tags: ["Data & Analytics", "Statistical Analysis", "Strategic Planning"], desc: "Model community disease transmission vectors to design national containment profiles." },
+                { title: "Astrobiologist", tags: ["Space & Astronomy", "Genetics & Biology", "Research Skills"], desc: "Hypothetically model extra-terrestrial cell growth parameters and extreme life adaptations." },
+                { title: "Cardiologist", tags: ["Medical Tech", "Resilience", "Problem Solving"], desc: "Treat critical human circulatory failures and execute coronary catheterization adjustments." },
+                { title: "Ecosystem Restoration Planner", tags: ["Environmental Protection", "Wildlife & Nature", "Organization & Planning"], desc: "Reconstruct dead wetlands and deforested plots back into balanced wilderness zones." }
             ],
             "Commerce": [
-                // ADDED BANK MANAGER TO COMMERCE
                 { title: "Bank Manager", tags: ["Business Management", "Financial Savvy", "Leadership"], desc: "Govern financial institution branches, manage portfolios, mitigate credit risk, and build customer networks." },
-                { title: "Investment Banker", tags: ["Stock Markets", "Financial Savvy", "Strategic Planning"], desc: "Leverage immense capital structures to fund massive corporate maneuvers." },
-                { title: "FinTech Founder", tags: ["Startups & Entrepreneurship", "Cryptocurrency", "Leadership"], desc: "Disrupt classic baking frameworks with software-based transactional layers." },
-                { title: "Chartered Accountant (CA)", tags: ["Financial Savvy", "Attention to Detail", "Mathematical Aptitude"], desc: "Audit high-level balances and minimize financial exposure." },
-                { title: "Data Risk Analyst", tags: ["Data & Analytics", "Analytical Thinking", "Critical Analysis"], desc: "Calculate economic pitfalls using real-world numbers." },
-                { title: "Portfolio Fund Manager", tags: ["Stock Markets", "Logical Reasoning", "Resilience"], desc: "Direct large capital funds into optimized equities pools." },
-                { title: "Corporate Attorney", tags: ["Law & Justice", "Negotiation", "Debating"], desc: "Moderate multibillion-dollar buyouts and asset distributions." },
-                { title: "Growth Marketer", tags: ["Digital Marketing", "Creative Thinking", "Persuasion"], desc: "Scale metrics exponentially via computational conversion pipelines." },
-                { title: "Management Consultant", tags: ["Business Management", "Problem Solving", "Public Speaking"], desc: "Re-engineer struggling business hierarchies for optimal efficiency." },
-                { title: "Venture Capitalist", tags: ["Startups & Entrepreneurship", "Networking", "Strategic Planning"], desc: "Seed early-stage start-up visionaries with strategic capital." },
-                { title: "Supply Chain Director", tags: ["Business Management", "Organization & Planning", "Team Management"], desc: "Streamline international freight workflows seamlessly." },
-                { title: "Actuary", tags: ["Statistical Analysis", "Mathematical Aptitude", "Analytical Thinking"], desc: "Assess long-term financial probabilities and liabilities." },
-                { title: "Brand Manager", tags: ["Psychology & Behavior", "Creative Thinking", "Visualizing Concepts"], desc: "Shape public perception and identity maps for top products." },
-                { title: "Human Capital Strategist", tags: ["Business Management", "Emotional Intelligence", "Active Listening"], desc: "Acquire and coordinate top talent networks across major systems." },
-                { title: "E-Commerce Strategist", tags: ["Digital Marketing", "Data & Analytics", "Time Management"], desc: "Architect high-performance online retail setups." },
-                { title: "Forensic Accountant", tags: ["Financial Savvy", "Attention to Detail", "Logical Reasoning"], desc: "Unearth hidden corporate fraud schemes and embezzled funds." },
-                { title: "Public Relations Executive", tags: ["Public Speaking", "Networking", "Persuasion"], desc: "Defend high-profile clients from reputation challenges." },
-                { title: "International Trade Arbitrator", tags: ["Law & Justice", "Negotiation", "Critical Analysis"], desc: "Resolve transnational border commercial stalemates." },
-                { title: "Real Estate Portfolio Developer", tags: ["Architecture & Decor", "Financial Savvy", "Leadership"], desc: "Acquire and scale urban structural plots into highly profitable sectors." },
-                { title: "Crypto Treasury Manager", tags: ["Cryptocurrency", "Analytical Thinking", "Resilience"], desc: "Balance organizational fiat currencies against volatile web3 vectors." },
-                { title: "Product Manager", tags: ["Business Management", "Problem Solving", "Team Management"], desc: "Guide digital assets from basic sketches to full deployment." },
-                { title: "Mergers & Acquisitions Analyst", tags: ["Business Management", "Financial Savvy", "Critical Analysis"], desc: "Evaluate corporate value variables to execute seamless company takeovers." },
-                { title: "Quantitative Risk Consultant", tags: ["Data & Analytics", "Statistical Analysis", "Logical Reasoning"], desc: "Build loss prediction formulas for commercial banks and insurance giants." },
-                { title: "Franchise Scale Consultant", tags: ["Startups & Entrepreneurship", "Organization & Planning", "Negotiation"], desc: "Formulate strategic legal and operational blueprints to multiply small operations globally." },
-                { title: "Carbon Credits Broker", tags: ["Environmental Protection", "Stock Markets", "Networking"], desc: "Facilitate the trading of global carbon offset limits between eco-conscious corporations." }
+                { title: "Investment Banker", tags: ["Stock Markets", "Financial Savvy", "Strategic Planning"], desc: "Leverage immense capital pools to guide mergers, acquisitions, and public offerings." },
+                { title: "FinTech Founder", tags: ["Startups & Entrepreneurship", "Cryptocurrency", "Leadership"], desc: "Disrupt classic baking frameworks with software-based transaction layers." },
+                { title: "Chartered Accountant (CA)", tags: ["Financial Savvy", "Attention to Detail", "Logical Reasoning"], desc: "Audit heavy enterprise ledger accounts and engineer bulletproof corporate tax configurations." },
+                { title: "Data-Driven Stock Trader", tags: ["Stock Markets", "Data & Analytics", "Resilience"], desc: "Execute rapid financial plays across volatile global equity indices." },
+                { title: "Corporate Risk Auditor", tags: ["Financial Savvy", "Critical Analysis", "Analytical Thinking"], desc: "Identify systemic vulnerabilities and operational risks inside international conglomerates." },
+                { title: "Venture Capital Partner", tags: ["Startups & Entrepreneurship", "Networking", "Strategic Planning"], desc: "Funnel multi-million dollar liquidity seeds into early high-growth tech firms." },
+                { title: "Supply Chain Director", tags: ["Business Management", "Organization & Planning", "Problem Solving"], desc: "Optimize international freight routes, warehouse inventories, and distribution workflows." },
+                { title: "Actuary / Risk Mathematician", tags: ["Statistical Analysis", "Mathematical Aptitude", "Logical Reasoning"], desc: "Model complex future probability costs for global reinsurance companies." },
+                { title: "Digital Brand Strategist", tags: ["Digital Marketing", "Creative Thinking", "Storytelling"], desc: "Scale viral user acquisition metrics through algorithmic social positioning." },
+                { title: "Real Estate Portfolio Manager", tags: ["Financial Savvy", "Negotiation", "Networking"], desc: "Acquire, optimize, and trade premium commercial properties and land trusts." },
+                { title: "Human Resources Director", tags: ["Business Management", "Team Management", "Emotional Intelligence"], desc: "Oversee cultural alignments, salary grids, and internal conflict resolutions." },
+                { title: "Product Manager", tags: ["Business Management", "Adaptability", "Communication"], desc: "Translate user metrics into specific sprint directives for software design loops." },
+                { title: "E-Commerce Operation Head", tags: ["Digital Marketing", "Data & Analytics", "Time Management"], desc: "Supervise digital storefront conversion rates, funnels, and ad spend returns." },
+                { title: "International Trade Broker", tags: ["Negotiation", "Strategic Planning", "Adaptability"], desc: "Arbitrage multi-country raw commodity exchanges across complex customs jurisdictions." },
+                { title: "Cryptocurrency Fund Specialist", tags: ["Cryptocurrency", "Financial Savvy", "Resilience"], desc: "Manage high-yield staking and decentralized finance capital pools." },
+                { title: "Hospitality Network CEO", tags: ["Business Management", "Leadership", "Team Management"], desc: "Direct multi-location luxury hotel real estate and standard service quality metrics." },
+                { title: "Public Relations Lead", tags: ["Public Speaking", "Persuasion", "Networking"], desc: "Shield high-profile public entities from intense reputational crises and press fallout." }
             ],
             "Arts & Humanities": [
-                // ADDED TEACHER, PROFESSOR, LAWYER, ACTOR, SPORTSPERSON TO ARTS & HUMANITIES
                 { title: "School Teacher / Educator", tags: ["Teaching & Training", "Public Speaking", "Patience"], desc: "Shape foundational intellects, manage classrooms, and construct structured learning experiences." },
-                { title: "University Professor / Scholar", tags: ["Teaching & Training", "Research Skills", "Critical Analysis"], desc: "Conduct advanced post-doctoral research, publish original papers, and instruct higher-tier students." },
-                { title: "Legal Counsel / Defense Lawyer", tags: ["Law & Justice", "Debating", "Analytical Thinking"], desc: "Represent clients in legal venues, draft binding statutory items, and build cases." },
-                { title: "Professional Actor / Performer", tags: ["Photography & Video", "Storytelling", "Artistic Flare"], desc: "Embody nuanced human characters on stage, cinema, or television sets." },
-                { title: "Professional Sportsperson / Athlete", tags: ["Sports & Fitness", "Resilience", "Time Management"], desc: "Compete at top structural limits in organized sports events through physical expertise." },
-                { title: "Creative Director", tags: ["Photography & Video", "Artistic Flare", "Visualizing Concepts"], desc: "Govern complete artistic aesthetics across media empires." },
-                { title: "Political Strategist", tags: ["Politics & Governance", "Strategic Planning", "Persuasion"], desc: "Design campaign communications and sentiment models for leaders." },
-                { title: "UX/UI Designer", tags: ["Graphic Designing", "Creative Thinking", "Psychology & Behavior"], desc: "Map visually stunning digital interfaces built for human behavior." },
-                { title: "Clinical Investigative Journalist", tags: ["Public Speaking", "Research Skills", "Debating"], desc: "Uncover subterranean cultural events and report them live." },
-                { title: "Psychotherapist", tags: ["Psychology & Behavior", "Empathy & Compassion", "Active Listening"], desc: "Provide advanced cognitive behavioral frameworks for mental clarity." },
-                { title: "Author / Content Producer", tags: ["Creative Writing", "Storytelling", "Patience"], desc: "Draft long-form ideas, scripts, and literary universes." },
-                { title: "Museum Conservator", tags: ["History & Culture", "Attention to Detail", "Research Skills"], desc: "Protect ancient artifacts and validate classical histories." },
-                { title: "Game Narrative Designer", tags: ["Video Game Design", "Creative Writing", "Storytelling"], desc: "Map lore nodes and dialogue options within virtual reality titles." },
-                { title: "Diplomatic Attache", tags: ["Politics & Governance", "Negotiation", "Emotional Intelligence"], desc: "Represent sovereign state goals within neutral foreign territories." },
-                { title: "Digital Animator", tags: ["Graphic Designing", "Visualizing Concepts", "Time Management"], desc: "Render three-dimensional cinematic textures and action profiles." },
-                { title: "Public Policy Architect", tags: ["Politics & Governance", "Statistical Analysis", "Organization & Planning"], desc: "Draft statutory blueprints to resolve city-wide systemic issues." },
-                { title: "Humanitarian Logistics Leader", tags: ["Social Work", "Leadership", "Resilience"], desc: "Deploy emergency resources directly into intense global conflict nodes." },
-                { title: "Cinematographer", tags: ["Photography & Video", "Artistic Flare", "Team Management"], desc: "Formulate complete cinematic lighting and camera operations." },
-                { title: "Industrial Design Innovator", tags: ["Architecture & Decor", "Creative Thinking", "Problem Solving"], desc: "Re-imagine ergonomic structures of standard consumer electronics." },
-                { title: "Linguistics Cryptologist", tags: ["Languages & Translation", "Analytical Thinking", "Patience"], desc: "Decode ancient dialects or obscure data signals." },
-                { title: "Soundscape Producer", tags: ["Music & Sound Design", "Creative Thinking", "Aptitude"], desc: "Compose ambient auditory scores for cinema and spatial events." },
-                { title: "Fashion Trend Forecaster", tags: ["Fashion & Styling", "Observation", "Strategic Planning"], desc: "Predict cultural aesthetics cycles months before production." },
-                { title: "Art Forensic Authenticator", tags: ["History & Culture", "Attention to Detail", "Observation"], desc: "Utilize chemical and stylistic analysis to spot high-profile painting forgeries." },
-                { title: "Corporate Anthropologist", tags: ["Psychology & Behavior", "Research Skills", "Active Listening"], desc: "Analyze workspace social habits to improve performance cultures inside multi-national companies." },
-                { title: "Geopolitical Intelligence Analyst", tags: ["Politics & Governance", "Critical Analysis", "Strategic Planning"], desc: "Evaluate international threat matrices and global trade vulnerabilities for security firms." }
+                { title: "University Professor", tags: ["Teaching & Training", "Research Skills", "Critical Analysis"], desc: "Conduct advanced post-doctoral research, publish original papers, and instruct higher-tier students." },
+                { title: "Legal Counsel / Lawyer", tags: ["Law & Justice", "Debating", "Analytical Thinking"], desc: "Represent clients in legal venues, draft binding statutory items, and build cases." },
+                { title: "Professional Actor", tags: ["Photography & Video", "Storytelling", "Artistic Flare"], desc: "Embody nuanced human characters on stage, cinema, or television sets." },
+                { title: "Professional Sportsperson", tags: ["Sports & Fitness", "Resilience", "Time Management"], desc: "Compete at top structural limits in organized sports events through physical expertise." },
+                { title: "Clinical Psychologist", tags: ["Psychology & Behavior", "Empathy & Compassion", "Active Listening"], desc: "Counsel and rehabilitate individuals navigating intense mental stressors." },
+                { title: "UI/UX Visual Designer", tags: ["Graphic Designing", "Visualizing Concepts", "Creative Thinking"], desc: "Map customer user flows and high-fidelity wireframe styling." },
+                { title: "Investigative Journalist", tags: ["Storytelling", "Research Skills", "Resilience"], desc: "Expose corruption and systemic breakdowns by trailing hidden factual leads." },
+                { title: "Architectural Historian", tags: ["History & Culture", "Architecture & Decor", "Research Skills"], desc: "Trace spatial evolution patterns of landmarks across historical centuries." },
+                { title: "Creative Copywriter", tags: ["Creative Writing", "Storytelling", "Persuasion"], desc: "Formulate punchy advertising copy that converts standard readers into active buyers." },
+                { title: "Non-Fiction Novelist", tags: ["Creative Writing", "Research Skills", "Patience"], desc: "Author comprehensive analytical documents or biographical works." },
+                { title: "Museum Collection Curator", tags: ["History & Culture", "Organization & Planning", "Attention to Detail"], desc: "Secure, catalog, and present ancient archeological artifacts to the public." },
+                { title: "Urban Spatial Designer", tags: ["Architecture & Decor", "Visualizing Concepts", "Strategic Planning"], desc: "Map healthy civic layouts balancing green parks and housing developments." },
+                { title: "Diplomatic Attache", tags: ["Politics & Governance", "Negotiation", "Languages & Translation"], desc: "Manage multi-nation embassy treaties and trade communication ties." },
+                { title: "International Translator", tags: ["Languages & Translation", "Attention to Detail", "Adaptability"], desc: "Convert nuanced legal or philosophical works smoothly into alternative dialects." },
+                { title: "Photojournalist", tags: ["Photography & Video", "Observation", "Resilience"], desc: "Capture raw storytelling images in volatile geopolitical regions." },
+                { title: "Human Rights Advocate", tags: ["Social Work", "Public Speaking", "Empathy & Compassion"], desc: "Lobby global courts to protect displaced populations and marginalized sectors." },
+                { title: "Non-Profit Program Director", tags: ["Social Work", "Leadership", "Team Management"], desc: "Coordinate massive humanitarian aid responses and logistical distribution drops." },
+                { title: "Film Director", tags: ["Photography & Video", "Leadership", "Storytelling"], desc: "Direct camera crews, editing tables, and acting performances to capture an artistic vision." },
+                { title: "Fashion Creative Director", tags: ["Fashion & Styling", "Artistic Flare", "Visualizing Concepts"], desc: "Conceptualize high-end runway lines and fabric identity motifs for modern seasons." },
+                { title: "Commercial Interior Designer", tags: ["Architecture & Decor", "Graphic Designing", "Negotiation"], desc: "Remodel sleek corporate lobbies and luxury workspaces using modern furniture layout rules." },
+                { title: "Political Strategist", tags: ["Politics & Governance", "Critical Analysis", "Persuasion"], desc: "Engineer demographic polling plans and message control matrices for election campaigns." },
+                { title: "NGO Fundraiser Coordinator", tags: ["Social Work", "Networking", "Persuasion"], desc: "Pitch high-net-worth philanthropists to secure operating liquidity for social changes." },
+                { title: "Corporate Training Consultant", tags: ["Teaching & Training", "Public Speaking", "Emotional Intelligence"], desc: "Run executive seminars to upgrade collective public presentation skills across teams." }
             ]
         };
 
+        // State Tracking variables
         let selectedStream = "";
         let selectedInterests = [];
         let selectedStrengths = [];
 
+        // Smooth Cursor Animation Tracking (Lerp Mechanism)
+        const dot = document.getElementById('custom-dot');
+        const ring = document.getElementById('custom-ring');
+        let mouseX = 0, mouseY = 0;   // Target Mouse coordinates
+        let dotX = 0, dotY = 0;       // Actual Dot coordinate positioning
+        let ringX = 0, ringY = 0;     // Actual Ring coordinate positioning
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursors() {
+            // Smoothly ease positions (Lerping: Current position + difference * delay scalar)
+            dotX += (mouseX - dotX) * 0.3;
+            dotY += (mouseY - dotY) * 0.3;
+            ringX += (mouseX - ringX) * 0.12; // Controls the elastic trail lag effect
+            ringY += (mouseY - ringY) * 0.12;
+
+            dot.style.left = `${dotX}px`;
+            dot.style.top = `${dotY}px`;
+            ring.style.left = `${ringX}px`;
+            ring.style.top = `${ringY}px`;
+
+            requestAnimationFrame(animateCursors);
+        }
+        requestAnimationFrame(animateCursors);
+
+        // Bind hover classes cleanly to static and dynamic elements
+        function refreshCursorHooks() {
+            const targets = document.querySelectorAll('button, .interactive-element, #interests-container button, #strengths-container button');
+            targets.forEach(element => {
+                // Remove previous listeners to prevent stack buildup
+                element.removeEventListener('mouseenter', addHoverClass);
+                element.removeEventListener('mouseleave', removeHoverClass);
+                
+                element.addEventListener('mouseenter', addHoverClass);
+                element.addEventListener('mouseleave', removeHoverClass);
+            });
+        }
+        
+        function addHoverClass() { document.body.classList.add('cursor-hover-active'); }
+        function removeHoverClass() { document.body.classList.remove('cursor-hover-active'); }
+
+        // Initial App Mount Engines
         window.onload = function() {
             renderStreams();
             renderBadges("interests-container", interests, selectedInterests, "btn-pink");
@@ -295,7 +336,7 @@
             streams.forEach(stream => {
                 const btn = document.createElement("button");
                 btn.innerText = stream;
-                btn.className = `p-4 rounded-xl font-bold cursor-pointer transition text-center border ${
+                btn.className = `p-4 rounded-xl font-bold transition text-center border text-sm ${
                     selectedStream === stream 
                     ? "btn-green text-gray-950 border-green-400" 
                     : "bg-gray-900/50 text-gray-400 border-white/5 hover:border-green-400/50 hover:text-white"
@@ -306,6 +347,7 @@
                 };
                 container.appendChild(btn);
             });
+            refreshCursorHooks();
         }
 
         function renderBadges(containerId, dataArray, stateArray, themeClass) {
@@ -316,7 +358,7 @@
                 badge.innerText = item;
                 const isActive = stateArray.includes(item);
                 
-                badge.className = `px-3 py-1.5 text-xs font-semibold rounded-lg cursor-pointer transition whitespace-nowrap border ${
+                badge.className = `px-3 py-1.5 text-xs font-semibold rounded-lg transition whitespace-nowrap border ${
                     isActive 
                     ? `${themeClass} text-white border-transparent` 
                     : "bg-gray-900/30 text-gray-400 border-white/5 hover:border-white/20 hover:text-white"
@@ -324,8 +366,7 @@
 
                 badge.onclick = () => {
                     if (isActive) {
-                        const index = stateArray.indexOf(item);
-                        stateArray.splice(index, 1);
+                        stateArray.splice(stateArray.indexOf(item), 1);
                     } else {
                         stateArray.push(item);
                     }
@@ -333,6 +374,7 @@
                 };
                 container.appendChild(badge);
             });
+            refreshCursorHooks();
         }
 
         function generateCareers() {
@@ -344,9 +386,10 @@
             const outputContainer = document.getElementById("careers-output");
             outputContainer.innerHTML = "";
             
-            const pool = careersDatabase[selectedStream];
+            const pool = careersDatabase[selectedStream] || [];
             let scoredCareers = [];
 
+            // Algorithmic Weight Scorer
             pool.forEach(career => {
                 let score = 0;
                 career.tags.forEach(tag => {
@@ -356,27 +399,30 @@
                 scoredCareers.push({ ...career, matchScore: score });
             });
 
+            // Sort: High score down to zero matches
             scoredCareers.sort((a, b) => b.matchScore - a.matchScore);
 
             scoredCareers.forEach(career => {
                 const card = document.createElement("div");
-                card.className = "glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-pink-500/40 transition duration-300";
+                card.className = "glass-panel p-5 rounded-2xl relative overflow-hidden group hover:border-pink-500/40 transition duration-300 interactive-element flex flex-col justify-between";
                 
                 let scoreColor = "bg-gray-700";
                 if (career.matchScore > 4) scoreColor = "bg-gradient-to-r from-green-400 to-pink-500";
                 else if (career.matchScore > 0) scoreColor = "bg-pink-500";
 
                 card.innerHTML = `
-                    <div class="absolute top-0 left-0 w-full h-1 ${scoreColor}"></div>
-                    <div class="flex justify-between items-start mb-3">
-                        <h3 class="text-xl font-extrabold group-hover:text-green-400 transition">${career.title}</h3>
-                        <span class="text-[10px] font-mono tracking-wider text-gray-400 uppercase bg-white/5 px-2 py-0.5 rounded-md">
-                            Score: +${career.matchScore}
-                        </span>
+                    <div>
+                        <div class="absolute top-0 left-0 w-full h-1 ${scoreColor}"></div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-lg font-extrabold group-hover:text-green-400 transition leading-snug">${career.title}</h3>
+                            <span class="text-[9px] font-mono tracking-wider text-gray-400 uppercase bg-white/5 px-1.5 py-0.5 rounded-md shrink-0 ml-2">
+                                Score: +${career.matchScore}
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-4 leading-relaxed">${career.desc}</p>
                     </div>
-                    <p class="text-xs text-gray-400 mb-4 leading-relaxed">${career.desc}</p>
-                    <div class="flex flex-wrap gap-1.5">
-                        ${career.tags.map(t => `<span class="text-[9px] bg-gray-900/80 px-2 py-0.5 rounded text-gray-500 border border-white/5">${t}</span>`).join('')}
+                    <div class="flex flex-wrap gap-1 mt-auto">
+                        ${career.tags.map(t => `<span class="text-[9px] bg-gray-900/80 px-2 py-0.5 rounded text-gray-500 border border-white/5 whitespace-nowrap">${t}</span>`).join('')}
                     </div>
                 `;
                 outputContainer.appendChild(card);
@@ -385,6 +431,7 @@
             const resultsSection = document.getElementById("results-section");
             resultsSection.classList.remove("hidden");
             resultsSection.scrollIntoView({ behavior: 'smooth' });
+            refreshCursorHooks();
         }
 
         function resetApp() {
